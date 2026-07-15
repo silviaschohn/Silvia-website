@@ -7,12 +7,15 @@ import Footer from '../components/Footer.astro';
   <Nav current="about" />
 
   <main>
-    <div class="about-portrait">
-      <img src="/images/about/portrait.jpg" alt="Portrait of Silvia Schohn" />
-      <svg class="frame-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 44 C 12 42, 16 46, 14 50 C 12 54, 6 54, 4 50 C 2 47, 4 45, 8 44 Z" fill="#7A2020"/>
-        <path d="M28 50 C 32 48, 36 52, 34 56 C 32 60, 26 60, 24 56 C 22 53, 24 51, 28 50 Z" fill="#1C1A18"/>
-      </svg>
+    <div class="about-pinboard">
+      <div class="pinned-photo photo-1">
+        <span class="pin"></span>
+        <img src="/images/about/portrait-1.jpg" alt="Silvia Schohn" />
+      </div>
+      <div class="pinned-photo photo-2">
+        <span class="pin"></span>
+        <img src="/images/about/portrait-2.jpg" alt="Silvia Schohn" />
+      </div>
     </div>
 
     <div class="about-copy">
@@ -32,17 +35,52 @@ import Footer from '../components/Footer.astro';
   main{
     padding:9rem 3rem 6rem;
     display:grid;
-    grid-template-columns:0.6fr 1.4fr;
-    gap:5vw;
+    grid-template-columns:0.7fr 1.3fr;
+    gap:6vw;
     align-items:start;
   }
-  .about-portrait{ position:relative; max-width:340px; }
-  .about-portrait img{
-    width:100%; display:block;
-    border-radius:10px;
-    filter:contrast(1.22) brightness(1.02);
+
+  .about-pinboard{
+    position:relative;
+    width:100%;
+    max-width:380px;
+    height:340px;
   }
-  .about-portrait .frame-mark{ position:absolute; bottom:-1.4rem; right:-1.4rem; width:64px; height:64px; }
+  .pinned-photo{
+    position:absolute;
+    background:var(--bone);
+    padding:0.6rem 0.6rem 1.6rem;
+    box-shadow:0 14px 28px rgba(28,26,24,0.22), 0 3px 8px rgba(28,26,24,0.12);
+  }
+  .pinned-photo img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .pinned-photo .pin{
+    position:absolute;
+    top:-7px; left:50%;
+    transform:translateX(-50%);
+    width:14px; height:14px;
+    border-radius:50%;
+    background:var(--maroon);
+    box-shadow:0 2px 4px rgba(0,0,0,0.35);
+    z-index:5;
+  }
+
+  .photo-1{
+    width:220px; height:270px;
+    top:0; left:0;
+    transform:rotate(-6deg);
+    z-index:1;
+  }
+  .photo-2{
+    width:200px; height:250px;
+    top:90px; left:150px;
+    transform:rotate(5deg);
+    z-index:2;
+  }
 
   .about-copy{ padding-top:1rem; max-width:74ch; }
   .about-copy .eyebrow{
@@ -63,6 +101,7 @@ import Footer from '../components/Footer.astro';
   }
 
   @media (max-width:860px){
-    main{ grid-template-columns:1fr; padding:7rem 1.4rem 4rem; gap:2.5rem; }
+    main{ grid-template-columns:1fr; padding:7rem 1.4rem 4rem; gap:4rem; }
+    .about-pinboard{ max-width:100%; height:300px; margin:0 auto; }
   }
 </style>
