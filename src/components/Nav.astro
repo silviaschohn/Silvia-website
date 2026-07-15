@@ -1,0 +1,14 @@
+---
+interface Props {
+  current?: 'home' | 'work' | 'about' | 'contact';
+}
+const { current } = Astro.props;
+---
+<nav class="site-nav">
+  <a class="wordmark" href="/">Silvia Schohn</a>
+  <ul class="nav-links">
+    <li><a href="/work" class={current === 'work' ? 'current' : ''}>Work</a></li>
+    <li><a href="/about" class={current === 'about' ? 'current' : ''}>About</a></li>
+    <li><a href="/contact" class={current === 'contact' ? 'current' : ''}>Contact</a></li>
+  </ul>
+</nav>

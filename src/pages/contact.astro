@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+<BaseLayout title="Contact">
+  <Nav current="contact" />
+
+  <main>
+    <span class="eyebrow">Contact</span>
+
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:schohn@usc.edu">
+        <span class="label">Email</span>
+        <span class="value">schohn@usc.edu</span>
+        <span class="underline"></span>
+      </a>
+      <a class="contact-link" href="https://www.linkedin.com/in/silviaschohn" target="_blank" rel="noopener">
+        <span class="label">LinkedIn</span>
+        <span class="value">in/silviaschohn</span>
+        <span class="underline"></span>
+      </a>
+    </div>
+
+    <svg class="contact-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 44 C 12 42, 16 46, 14 50 C 12 54, 6 54, 4 50 C 2 47, 4 45, 8 44 Z" fill="#3E7FA8"/>
+      <path d="M28 50 C 32 48, 36 52, 34 56 C 32 60, 26 60, 24 56 C 22 53, 24 51, 28 50 Z" fill="#7A2020"/>
+    </svg>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  main{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:8rem 3rem 6rem;
+    max-width:900px;
+  }
+  .eyebrow{
+    font-family:var(--serif);
+    font-size:clamp(2rem, 4.5vw, 3.2rem);
+    font-weight:500;
+    letter-spacing:0;
+    color:var(--maroon);
+    margin-bottom:1.4rem;
+  }
+  .contact-links{ display:flex; flex-direction:column; gap:1.6rem; margin-top:2rem; }
+  .contact-link{
+    display:inline-flex; align-items:baseline; gap:1rem;
+    text-decoration:none; color:var(--ink);
+    width:fit-content; position:relative;
+  }
+  .contact-link .label{
+    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--maroon); min-width:90px; display:inline-block;
+  }
+  .contact-link .value{
+    font-family:var(--serif);
+    font-size:clamp(1.3rem, 2.6vw, 1.9rem);
+    font-weight:400;
+    transition:opacity 0.3s ease;
+  }
+  .contact-link .underline{
+    position:absolute; left:106px; bottom:-4px; right:0; height:1px;
+    background:var(--ink); transform:scaleX(0); transform-origin:left;
+    transition:transform 0.5s cubic-bezier(.65,0,.35,1);
+  }
+  .contact-link:hover .underline{transform:scaleX(1);}
+  .contact-link:hover .value{opacity:0.6;}
+  .contact-mark{ margin-top:4rem; width:56px; opacity:0.85; }
+
+  @media (max-width:700px){
+    main{padding:7rem 1.4rem 4rem;}
+    .contact-link .label{min-width:0; display:block; margin-bottom:0.2rem;}
+    .contact-link{flex-direction:column; align-items:flex-start; gap:0.2rem;}
+    .contact-link .underline{left:0;}
+  }
+</style>

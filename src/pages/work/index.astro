@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+---
+<BaseLayout title="Work">
+  <Nav current="work" />
+
+  <div class="work-header">
+  </div>
+
+  <section id="portals">
+    <div class="portals">
+      <a class="portal imagine" href="/imagine">
+        <div class="portal-color"></div>
+        <div class="portal-bg" style="background-image:url('/images/homepage/imagine.jpg')"></div>
+        <div class="portal-tint"></div>
+        <div class="portal-wash"></div>
+        <div class="portal-content">
+          <span class="portal-index">01</span>
+          <div class="portal-verb">Imagine <span class="arrow">&#8594;</span></div>
+          <div class="portal-discipline">Experiential Design</div>
+        </div>
+      </a>
+
+      <a class="portal build" href="/build">
+        <div class="portal-color"></div>
+        <div class="portal-bg" style="background-image:url('/images/homepage/build.jpg'); background-position:center 22%;"></div>
+        <div class="portal-tint"></div>
+        <div class="portal-wash"></div>
+        <div class="portal-content">
+          <span class="portal-index">02</span>
+          <div class="portal-verb">Build <span class="arrow">&#8594;</span></div>
+          <div class="portal-discipline">Fabrication</div>
+        </div>
+      </a>
+
+      <a class="portal direct" href="/direct">
+        <div class="portal-color"></div>
+        <div class="portal-bg" style="background-image:url('/images/homepage/direct.jpg')"></div>
+        <div class="portal-tint"></div>
+        <div class="portal-wash"></div>
+        <div class="portal-content">
+          <span class="portal-index">03</span>
+          <div class="portal-verb">Direct <span class="arrow">&#8594;</span></div>
+          <div class="portal-discipline">Creative Production</div>
+        </div>
+      </a>
+
+      <a class="portal collect" href="/collect">
+        <div class="portal-color"></div>
+        <div class="portal-bg" style="background-image:url('/images/homepage/collect.jpg')"></div>
+        <div class="portal-tint"></div>
+        <div class="portal-wash"></div>
+        <div class="portal-content">
+          <span class="portal-index">04</span>
+          <div class="portal-verb">Collect <span class="arrow">&#8594;</span></div>
+          <div class="portal-discipline">Visual Studio</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .work-header{
+    padding:8rem 3rem 0;
+  }
+  .work-header .eyebrow{
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--maroon);
+    font-weight:500;
+    margin-bottom:1rem;
+    display:block;
+  }
+  .work-header h1{
+    font-family:var(--serif);
+    font-size:clamp(2.4rem, 5vw, 3.6rem);
+    font-weight:500;
+  }
+
+  .portals{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto auto;
+    gap:2.25rem;
+    padding:1rem 3rem 6rem;
+  }
+  .portal{
+    position:relative;
+    border-radius:0;
+    overflow:hidden;
+    cursor:pointer;
+    display:flex;
+    align-items:flex-end;
+    min-height:400px;
+    text-decoration:none;
+    isolation:isolate;
+  }
+  .portal-color{ position:absolute; inset:0; transition:opacity 0.9s cubic-bezier(.65,0,.35,1); }
+  .portal.imagine .portal-color{background:#9C2E2E;}
+  .portal.build .portal-color{background:#D9CBAE;}
+  .portal.direct .portal-color{background:#39332E;}
+  .portal.collect .portal-color{background:#4B96C6;}
+  .portal:hover .portal-color{opacity:0;}
+
+  .portal-bg{
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+    transform:scale(1.06);
+    filter:saturate(1.35) contrast(1.1) brightness(1.05);
+    transition:transform 1.3s cubic-bezier(.19,1,.22,1);
+  }
+  .portal.build .portal-bg{filter:saturate(1.02) contrast(1.03) brightness(1.02);}
+
+  .portal-tint{
+    position:absolute; inset:0;
+    background:rgba(62,127,168,0.4);
+    mix-blend-mode:multiply;
+    transition:opacity 0.7s ease;
+  }
+  .portal.build .portal-tint{opacity:0.1;}
+  .portal.build:hover .portal-tint{opacity:0.04;}
+
+  .portal-wash{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(28,26,24,0) 32%, rgba(28,26,24,0.5) 68%, rgba(28,26,24,0.86) 100%);
+    transition:opacity 0.6s ease;
+  }
+  .portal:hover .portal-bg{transform:scale(1.0);}
+  .portal:hover .portal-tint{opacity:0.15;}
+  .portal:hover .portal-wash{opacity:0.85;}
+
+  .portal-content{
+    position:relative; z-index:2;
+    padding:2rem 2.2rem;
+    width:100%;
+    color:var(--bone);
+    text-shadow:0 1px 12px rgba(0,0,0,0.35);
+  }
+  .portal.build .portal-content{ text-shadow:0 2px 10px rgba(28,26,24,0.55), 0 1px 2px rgba(28,26,24,0.6); }
+  .portal-index{ font-size:0.7rem; letter-spacing:0.14em; opacity:0.75; margin-bottom:0.6rem; display:block; }
+  .portal-verb{
+    font-family:var(--serif);
+    font-size:clamp(1.8rem, 3.4vw, 3rem);
+    font-weight:500; line-height:1;
+    display:flex; align-items:center; gap:0.6rem;
+  }
+  .portal-verb .arrow{ font-size:1.3rem; transform:translateY(-2px); opacity:0; transition:opacity 0.4s ease, transform 0.4s ease; }
+  .portal:hover .portal-verb .arrow{ opacity:1; transform:translateY(-2px) translateX(4px); }
+  .portal-discipline{ font-family:var(--sans); font-size:0.85rem; letter-spacing:0.04em; margin-top:0.5rem; opacity:0.9; }
+
+  @media (max-width:800px){
+    .work-header{padding:7rem 1.4rem 2rem;}
+    .portals{grid-template-columns:1fr; gap:1.5rem; padding:1rem 1.4rem 4rem;}
+  }
+</style>

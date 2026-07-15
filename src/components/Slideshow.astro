@@ -1,0 +1,147 @@
+---
+interface Props {
+  images: string[]; // filenames
+  folder: string; // e.g. "imagine/ibiza-skylink"
+  alt: string;
+}
+const { images, folder, alt } = Astro.props;
+const hasImages = images && images.length > 0;
+---
+<div class="slideshow" data-slideshow>
+  <div class="slides">
+    {hasImages ? (
+      images.map((img) => (
+        <div class="slide" style={`background-image:url('/images/${folder}/${img}')`}></div>
+      ))
+    ) : (
+      <div class="slide empty">Image coming soon</div>
+    )}
+  </div>
+</div>
+
+<style>
+  .slideshow{
+    position:relative;
+    width:100%;
+    max-width:780px;
+    aspect-ratio:16/9;
+    background:var(--sand);
+    overflow:hidden;
+  }
+  .slides{
+    display:flex;
+    height:100%;
+    transition:transform 0.7s cubic-bezier(.65,0,.35,1);
+  }
+  .slide{
+    min-width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .slide.empty{
+    color:var(--ink);
+    opacity:0.5;
+    font-size:0.85rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-family:var(--sans);
+  }
+</style>
+
+<style is:global>
+  .slideshow-nav{
+    position:absolute;
+    bottom:1rem; right:1rem;
+    display:flex;
+    gap:0.6rem;
+    align-items:center;
+    z-index:5;
+  }
+  .slideshow-nav button{
+    width:34px; height:34px;
+    border-radius:50%;
+    border:1px solid rgba(241,238,233,0.7);
+    background:rgba(28,26,24,0.55);
+    color:#F1EEE9;
+    cursor:pointer;
+    font-family:'General Sans', sans-serif;
+    font-size:0.9rem;
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.3s ease;
+    padding:0;
+  }
+  .slideshow-nav button:hover{background:rgba(28,26,24,0.8);}
+  .slideshow-dots{
+    position:absolute;
+    bottom:1rem; left:1rem;
+    display:flex;
+    gap:0.4rem;
+    z-index:5;
+  }
+  .slideshow-dots span{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:rgba(241,238,233,0.5);
+    transition:background 0.3s ease;
+  }
+  .slideshow-dots span.active{background:#F1EEE9;}
+</style>
+
+<script>
+  function initSlideshows() {
+    document.querySelectorAll('[data-slideshow]').forEach((container) => {
+      const slidesWrap = container.querySelector('.slides');
+      const slides = container.querySelectorAll('.slide');
+      if (!slidesWrap || slides.length <= 1) return;
+
+      let current = 0;
+
+      const nav = document.createElement('div');
+      nav.className = 'slideshow-nav';
+      nav.innerHTML = '<button class="prev" type="button">&#8592;</button><button class="next" type="button">&#8594;</button>';
+      container.appendChild(nav);
+
+      const dots = document.createElement('div');
+      dots.className = 'slideshow-dots';
+      slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        if (i === 0) dot.classList.add('active');
+        dots.appendChild(dot);
+      });
+      container.appendChild(dots);
+
+      function update() {
+        slidesWrap.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dots.querySelectorAll('span').forEach((d, i) => {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      const prevBtn = nav.querySelector('.prev');
+      const nextBtn = nav.querySelector('.next');
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          current = (current - 1 + slides.length) % slides.length;
+          update();
+        });
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          current = (current + 1) % slides.length;
+          update();
+        });
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSlideshows);
+  } else {
+    initSlideshows();
+  }
+</script>

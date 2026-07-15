@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+<BaseLayout title="About">
+  <Nav current="about" />
+
+  <main>
+    <div class="about-portrait">
+      <img src="/images/about/portrait.jpg" alt="Portrait of Silvia Schohn" />
+      <svg class="frame-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 44 C 12 42, 16 46, 14 50 C 12 54, 6 54, 4 50 C 2 47, 4 45, 8 44 Z" fill="#7A2020"/>
+        <path d="M28 50 C 32 48, 36 52, 34 56 C 32 60, 26 60, 24 56 C 22 53, 24 51, 28 50 Z" fill="#1C1A18"/>
+      </svg>
+    </div>
+
+    <div class="about-copy">
+      <span class="eyebrow">About</span>
+      <h1>Hi, I'm Silvia.</h1>
+      <p>I grew up in New York City, where I spent most of my childhood dancing. Through dance, I became fascinated by how movement, music, lighting, and space could come together to tell a story. It was also where I first learned the importance of collaboration. Working closely with choreographers, directors, designers, musicians, and fellow performers taught me how to communicate across creative disciplines, an experience that continues to shape the way I approach design today.</p>
+      <p>That curiosity eventually led me to immersive theater, and after seeing Sleep No More, I realized I wanted to design experiences where the audience wasn't just watching the story. They were actively discovering it. That experience ultimately inspired me to pursue a BFA in Themed Entertainment at the University of Southern California.</p>
+      <p>Today, I enjoy working across the creative process, from concept development and guest experience design to fabrication and creative production. I love collaborating with multidisciplinary teams to bring ideas into the physical world and create places that invite people to engage with a story in unexpected ways.</p>
+      <p>Outside of projects, I'm constantly collecting inspiration from art, architecture, fashion, and travel. I'm always paying attention to the small details that make a place memorable, and I hope to create experiences that reward curiosity, invite exploration, and stay with people long after they leave.</p>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  main{
+    padding:9rem 3rem 6rem;
+    display:grid;
+    grid-template-columns:0.6fr 1.4fr;
+    gap:5vw;
+    align-items:start;
+  }
+  .about-portrait{ position:relative; max-width:340px; }
+  .about-portrait img{
+    width:100%; display:block;
+    border-radius:10px;
+    filter:contrast(1.22) brightness(1.02);
+  }
+  .about-portrait .frame-mark{ position:absolute; bottom:-1.4rem; right:-1.4rem; width:64px; height:64px; }
+
+  .about-copy{ padding-top:1rem; max-width:74ch; }
+  .about-copy .eyebrow{
+    font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--maroon); font-weight:500; margin-bottom:1.2rem;
+  }
+  .about-copy h1{
+    font-family:var(--serif);
+    font-size:clamp(2.4rem, 5vw, 4rem);
+    font-weight:500; line-height:1.05;
+    margin-bottom:2.2rem;
+  }
+  .about-copy p{ font-size:1.05rem; line-height:1.75; margin-bottom:1.5rem; opacity:0.92; }
+  .about-copy p:first-of-type::first-letter{
+    font-family:var(--serif); font-size:3.2rem; float:left;
+    line-height:0.8; padding-right:0.6rem; padding-top:0.4rem;
+    color:var(--maroon);
+  }
+
+  @media (max-width:860px){
+    main{ grid-template-columns:1fr; padding:7rem 1.4rem 4rem; gap:2.5rem; }
+  }
+</style>

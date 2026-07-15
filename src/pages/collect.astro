@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+<BaseLayout title="Collect">
+  <Nav />
+
+  <div class="gallery-header">
+    <span class="eyebrow">04 &mdash; Collect</span>
+    <h1>Visual Studio</h1>
+  </div>
+
+  <nav class="quicknav">
+    <a href="#graphic-design">Graphic Design</a>
+    <a href="#collage">Collage</a>
+    <a href="#fine-art">Fine Art</a>
+    <a href="#merchandise">Merchandise</a>
+  </nav>
+
+  <div class="section" id="graphic-design">
+    <div class="section-title"><span class="index">01</span><h2>Graphic Design</h2></div>
+    <div class="natural-grid">
+      <img src="/images/collect/graphic-1.jpg" alt="Kappa Klassic graphic design" />
+    </div>
+  </div>
+
+  <div class="section" id="collage">
+    <div class="section-title"><span class="index">02</span><h2>Collage</h2></div>
+    <div class="natural-grid">
+      <img src="/images/collect/collage-1.jpg" alt="Collage work" />
+    </div>
+  </div>
+
+  <div class="section" id="fine-art">
+    <div class="section-title"><span class="index">03</span><h2>Fine Art</h2></div>
+    <div class="natural-grid">
+      <img src="/images/collect/finart-1.jpg" alt="Mixed media paper sculpture" />
+      <img src="/images/collect/finart-2.jpg" alt="Mixed media sculpture" />
+    </div>
+  </div>
+
+  <div class="section" id="merchandise">
+    <div class="section-title"><span class="index">04</span><h2>Merchandise</h2></div>
+    <div class="natural-grid">
+      <img src="/images/collect/merch-1.jpg" alt="LaGuardia Dance Department merchandise" />
+    </div>
+  </div>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .gallery-header{
+    padding:9rem 3rem 2rem;
+    max-width:640px;
+  }
+  .gallery-header .eyebrow{
+    font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--maroon); font-weight:500; margin-bottom:1.8rem; display:block;
+  }
+  .gallery-header h1{
+    font-family:var(--serif);
+    font-size:clamp(2.6rem, 5.5vw, 4.2rem);
+    font-weight:500; line-height:1.05; margin-bottom:1.2rem;
+  }
+  .gallery-header p{ font-family:var(--serif); font-style:italic; font-size:1.15rem; opacity:0.85; }
+
+  .quicknav{
+    display:flex; flex-wrap:wrap; gap:0.5rem 1.8rem;
+    padding:0 3rem 4rem; max-width:900px;
+  }
+  .quicknav a{
+    font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink); opacity:0.5; text-decoration:none; transition:opacity 0.3s ease;
+  }
+  .quicknav a:hover{opacity:1;}
+
+  .section{
+    padding:4rem 3rem 6rem;
+    scroll-margin-top:6rem;
+    border-top:0.5px solid rgba(28,26,24,0.12);
+  }
+  .section:first-of-type{border-top:none;}
+  .section-title{ display:flex; align-items:baseline; gap:1.2rem; margin-bottom:2.5rem; }
+  .section-title .index{ font-size:0.75rem; letter-spacing:0.1em; color:var(--maroon); }
+  .section-title h2{
+    font-family:var(--serif);
+    font-size:clamp(1.8rem, 3.6vw, 2.8rem);
+    font-weight:500;
+  }
+
+  .natural-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+    gap:1.5rem;
+    align-items:start;
+  }
+  .natural-grid img{
+    width:100%;
+    height:auto;
+    display:block;
+  }
+
+  @media (max-width:860px){
+    .gallery-header{padding:7rem 1.4rem 1.5rem;}
+    .quicknav{padding:0 1.4rem 3rem;}
+    .section{padding:3rem 1.4rem 4rem;}
+    .natural-grid{grid-template-columns:1fr;}
+  }
+</style>

@@ -1,0 +1,133 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Slideshow from '../../components/Slideshow.astro';
+
+const projects = (await getCollection('build')).sort((a, b) => a.data.order - b.data.order);
+
+function slugify(title: string) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+---
+<BaseLayout title="Build">
+  <Nav />
+
+  <div class="gallery-header">
+    <span class="eyebrow">02 &mdash; Build</span>
+    <h1>Fabrication</h1>
+    <p>Transforming ideas into physical environments.</p>
+  </div>
+
+  <div class="gallery-body">
+    <nav class="toc" id="toc">
+      <span class="toc-label">Projects</span>
+      {projects.map((project) => (
+        <a href={`#${slugify(project.data.title)}`} class="toc-link">{project.data.title}</a>
+      ))}
+    </nav>
+
+    <div class="projects">
+      {projects.map((project, i) => (
+        <div class="project" id={slugify(project.data.title)}>
+          <span class="index">{String(i + 1).padStart(2, '0')}</span>
+          <h2>{project.data.title}</h2>
+          <p class={`blurb ${project.data.images.length === 0 ? 'placeholder' : ''}`}>
+            {project.data.blurb}
+          </p>
+          <Slideshow
+            images={project.data.images}
+            folder={`build/${project.data.imageFolder}`}
+            alt={project.data.title}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .gallery-header{ padding:9rem 3rem 4rem; max-width:640px; text-align:left; }
+  .gallery-header .eyebrow{
+    font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--maroon); font-weight:500; margin-bottom:1.8rem; display:block;
+  }
+  .gallery-header h1{
+    font-family:var(--serif);
+    font-size:clamp(2.6rem, 5.5vw, 4.2rem);
+    font-weight:500; line-height:1.05; margin-bottom:1.2rem; text-align:left;
+  }
+  .gallery-header p{ font-family:var(--serif); font-style:italic; font-size:1.15rem; opacity:0.85; }
+
+  .gallery-body{
+    display:grid; grid-template-columns:220px 1fr; gap:4vw;
+    padding:0 3rem 8rem; align-items:start;
+  }
+  .toc{ position:sticky; top:9rem; display:flex; flex-direction:column; gap:0.9rem; }
+  .toc .toc-label{
+    font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--ink); opacity:0.45; margin-bottom:0.6rem;
+  }
+  .toc a{
+    font-size:0.85rem; color:var(--ink); text-decoration:none; opacity:0.45;
+    transition:opacity 0.35s ease; line-height:1.4;
+    border-left:1px solid transparent; padding-left:0.8rem;
+  }
+  .toc a:hover{opacity:0.8;}
+  .toc a.active{ opacity:1; color:var(--maroon); border-left:1px solid var(--maroon); font-weight:500; }
+
+  .projects{ display:flex; flex-direction:column; gap:9rem; }
+  .project{ scroll-margin-top:8rem; }
+  .project .index{ font-size:0.72rem; letter-spacing:0.14em; color:var(--maroon); margin-bottom:0.8rem; display:block; }
+  .project h2{
+    font-family:var(--serif);
+    font-size:clamp(1.8rem, 3.4vw, 2.6rem);
+    font-weight:500; margin-bottom:1rem; text-align:left;
+  }
+  .project .blurb{ font-size:1rem; line-height:1.75; max-width:62ch; opacity:0.9; margin-bottom:2.2rem; }
+  .project .blurb.placeholder{ font-style:italic; opacity:0.5; }
+
+  @media (max-width:860px){
+    .gallery-header{padding:7rem 1.4rem 3rem;}
+    .gallery-body{grid-template-columns:1fr; padding:0 1.4rem 5rem; gap:2.5rem;}
+    .toc{
+      position:static; flex-direction:row; flex-wrap:wrap;
+      gap:0.6rem 1.2rem; padding-bottom:1.5rem;
+      border-bottom:0.5px solid rgba(28,26,24,0.15); margin-bottom:1rem;
+    }
+    .toc .toc-label{width:100%;}
+    .toc a{padding-left:0; border-left:none;}
+    .toc a.active{border-left:none; text-decoration:underline;}
+  }
+</style>
+
+<script>
+  const links = document.querySelectorAll('.toc-link');
+  const sections = Array.from(document.querySelectorAll('.project'));
+
+  function updateActiveLink() {
+    const scrollPos = window.scrollY + window.innerHeight * 0.3;
+    let currentId = (sections[0] as HTMLElement).id;
+
+    sections.forEach((sec) => {
+      if ((sec as HTMLElement).offsetTop <= scrollPos) {
+        currentId = (sec as HTMLElement).id;
+      }
+    });
+
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 4) {
+      currentId = (sections[sections.length - 1] as HTMLElement).id;
+    }
+
+    links.forEach((l) => {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + currentId);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveLink, { passive: true });
+  window.addEventListener('resize', updateActiveLink);
+  updateActiveLink();
+</script>
